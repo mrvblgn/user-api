@@ -4,7 +4,7 @@ using Senswise.UserService.Infrastructure.Persistence;
 
 namespace Senswise.UserService.Application.Features.Users.Commands.DeleteUser;
 
-public sealed class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand, Unit>
+public sealed class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand, DeleteUserResponse>
 {
     private readonly AppDbContext _context;
 
@@ -13,7 +13,7 @@ public sealed class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand
         _context = context;
     }
 
-    public async Task<Unit> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
+    public async Task<DeleteUserResponse> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
     {
         var user = await _context.Users
             .FirstOrDefaultAsync(u => u.Id == request.Id, cancellationToken);
@@ -26,6 +26,9 @@ public sealed class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand
         _context.Users.Remove(user);
         await _context.SaveChangesAsync(cancellationToken);
 
-        return Unit.Value;
+        return new DeleteUserResponse(
+            request.Id,
+            $"User '{user.FirstName} {user.LastName}' deleted successfully."
+        );
     }
 }

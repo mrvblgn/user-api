@@ -2,6 +2,7 @@ using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Senswise.UserService.Application.Behaviors;
+using Senswise.UserService.Infrastructure.Middleware;
 using Senswise.UserService.Infrastructure.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -48,6 +49,9 @@ builder.Services.AddSwaggerGen(options =>
 });
 
 var app = builder.Build();
+
+// Global exception handler
+app.UseMiddleware<GlobalExceptionHandlerMiddleware>();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
