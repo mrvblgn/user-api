@@ -317,7 +317,6 @@ dotnet ef database update
 
 Sorularınız için:
 - GitHub: [https://github.com/mrvblgn/user-api](https://github.com/mrvblgn/user-api)
-- Email: merve@senswise.com
 
 ## 📄 Lisans
 
