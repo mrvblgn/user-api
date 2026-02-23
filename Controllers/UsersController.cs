@@ -41,17 +41,10 @@ public class UsersController : ControllerBase
     [ProducesResponseType(typeof(ApiResponse<UserDto>), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetById(Guid id, CancellationToken cancellationToken)
     {
-        try
-        {
-            var query = new GetUserByIdQuery(id);
-            var result = await _mediator.Send(query, cancellationToken);
-            var response = ApiResponse<UserDto>.SuccessResponse(result, "User retrieved successfully.");
-            return Ok(response);
-        }
-        catch (KeyNotFoundException ex)
-        {
-            return NotFound(ApiResponse<UserDto>.ErrorResponse(ex.Message));
-        }
+        var query = new GetUserByIdQuery(id);
+        var result = await _mediator.Send(query, cancellationToken);
+        var response = ApiResponse<UserDto>.SuccessResponse(result, "User retrieved successfully.");
+        return Ok(response);
     }
 
     /// <summary>
@@ -62,21 +55,9 @@ public class UsersController : ControllerBase
     [ProducesResponseType(typeof(ApiResponse<CreateUserResponse>), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Create([FromBody] CreateUserCommand command, CancellationToken cancellationToken)
     {
-        try
-        {
-            var result = await _mediator.Send(command, cancellationToken);
-            var response = ApiResponse<CreateUserResponse>.SuccessResponse(result, "User created successfully.");
-            return CreatedAtAction(nameof(GetById), new { id = result.Id }, response);
-        }
-        catch (FluentValidation.ValidationException ex)
-        {
-            var errors = ex.Errors.Select(e => e.ErrorMessage).ToList();
-            return BadRequest(ApiResponse<CreateUserResponse>.ErrorResponse(errors));
-        }
-        catch (ArgumentException ex)
-        {
-            return BadRequest(ApiResponse<CreateUserResponse>.ErrorResponse(ex.Message));
-        }
+        var result = await _mediator.Send(command, cancellationToken);
+        var response = ApiResponse<CreateUserResponse>.SuccessResponse(result, "User created successfully.");
+        return CreatedAtAction(nameof(GetById), new { id = result.Id }, response);
     }
 
     /// <summary>
@@ -90,28 +71,12 @@ public class UsersController : ControllerBase
     {
         if (id != command.Id)
         {
-            return BadRequest(ApiResponse<UpdateUserResponse>.ErrorResponse("ID in URL does not match ID in request body."));
+            throw new ArgumentException("ID in URL does not match ID in request body.");
         }
 
-        try
-        {
-            var result = await _mediator.Send(command, cancellationToken);
-            var response = ApiResponse<UpdateUserResponse>.SuccessResponse(result, "User updated successfully.");
-            return Ok(response);
-        }
-        catch (KeyNotFoundException ex)
-        {
-            return NotFound(ApiResponse<UpdateUserResponse>.ErrorResponse(ex.Message));
-        }
-        catch (FluentValidation.ValidationException ex)
-        {
-            var errors = ex.Errors.Select(e => e.ErrorMessage).ToList();
-            return BadRequest(ApiResponse<UpdateUserResponse>.ErrorResponse(errors));
-        }
-        catch (ArgumentException ex)
-        {
-            return BadRequest(ApiResponse<UpdateUserResponse>.ErrorResponse(ex.Message));
-        }
+        var result = await _mediator.Send(command, cancellationToken);
+        var response = ApiResponse<UpdateUserResponse>.SuccessResponse(result, "User updated successfully.");
+        return Ok(response);
     }
 
     /// <summary>
@@ -122,16 +87,9 @@ public class UsersController : ControllerBase
     [ProducesResponseType(typeof(ApiResponse<DeleteUserResponse>), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Delete(Guid id, CancellationToken cancellationToken)
     {
-        try
-        {
-            var command = new DeleteUserCommand(id);
-            var result = await _mediator.Send(command, cancellationToken);
-            var response = ApiResponse<DeleteUserResponse>.SuccessResponse(result, result.Message);
-            return Ok(response);
-        }
-        catch (KeyNotFoundException ex)
-        {
-            return NotFound(ApiResponse<DeleteUserResponse>.ErrorResponse(ex.Message));
-        }
+        var command = new DeleteUserCommand(id);
+        var result = await _mediator.Send(command, cancellationToken);
+        var response = ApiResponse<DeleteUserResponse>.SuccessResponse(result, result.Message);
+        return Ok(response);
     }
 }
