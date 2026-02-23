@@ -7,20 +7,20 @@ public sealed class CreateUserCommandValidator : AbstractValidator<CreateUserCom
     public CreateUserCommandValidator()
     {
         RuleFor(x => x.FirstName)
-            .NotEmpty().WithMessage("First name is required.")
-            .MaximumLength(100).WithMessage("First name cannot exceed 100 characters.");
+            .NotEmpty().WithMessage("Ad alanı zorunludur.")
+            .MaximumLength(100).WithMessage("Ad 100 karakteri geçemez.");
 
         RuleFor(x => x.LastName)
-            .NotEmpty().WithMessage("Last name is required.")
-            .MaximumLength(100).WithMessage("Last name cannot exceed 100 characters.");
+            .NotEmpty().WithMessage("Soyad alanı zorunludur.")
+            .MaximumLength(100).WithMessage("Soyad 100 karakteri geçemez.");
 
         RuleFor(x => x.Email)
-            .NotEmpty().WithMessage("Email is required.")
-            .EmailAddress().WithMessage("Email must be a valid email address.")
-            .MaximumLength(255).WithMessage("Email cannot exceed 255 characters.");
+            .NotEmpty().WithMessage("E-posta alanı zorunludur.")
+            .EmailAddress().WithMessage("Geçerli bir e-posta adresi giriniz.")
+            .MaximumLength(255).WithMessage("E-posta 255 karakteri geçemez.");
 
         RuleFor(x => x.Address)
-            .MaximumLength(500).WithMessage("Address cannot exceed 500 characters.")
+            .MaximumLength(500).WithMessage("Adres 500 karakteri geçemez.")
             .When(x => !string.IsNullOrWhiteSpace(x.Address));
     }
 }

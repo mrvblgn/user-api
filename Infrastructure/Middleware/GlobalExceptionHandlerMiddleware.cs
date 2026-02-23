@@ -39,7 +39,7 @@ public class GlobalExceptionHandlerMiddleware
             {
                 statusCode = (int)HttpStatusCode.BadRequest,
                 response = ApiResponse<object>.ErrorResponse(
-                    "Validation failed",
+                    "Doğrulama başarısız",
                     validationException.Errors.Select(e => e.ErrorMessage).ToList()
                 )
             },
@@ -57,7 +57,7 @@ public class GlobalExceptionHandlerMiddleware
             {
                 statusCode = (int)HttpStatusCode.InternalServerError,
                 response = ApiResponse<object>.ErrorResponse(
-                    "An unexpected error occurred. Please try again later.",
+                    "Beklenmeyen bir hata oluştu. Lütfen daha sonra tekrar deneyiniz.",
                     new List<string> { exception.Message }
                 )
             }

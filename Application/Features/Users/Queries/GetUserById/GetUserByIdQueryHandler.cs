@@ -32,7 +32,7 @@ public sealed class GetUserByIdQueryHandler : IRequestHandler<GetUserByIdQuery, 
 
         if (user == null)
         {
-            throw new KeyNotFoundException($"User with ID {request.Id} not found.");
+            throw new KeyNotFoundException($"ID'si {request.Id} olan kullanıcı bulunamadı.");
         }
 
         return user;

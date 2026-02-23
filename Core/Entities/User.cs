@@ -75,12 +75,12 @@ public sealed class User : BaseEntity
     {
         if (string.IsNullOrWhiteSpace(firstName))
         {
-            throw new ArgumentException("First name cannot be null or empty.", nameof(firstName));
+            throw new ArgumentException("Ad alanı boş olamaz.", nameof(firstName));
         }
 
         if (firstName.Length > 100)
         {
-            throw new ArgumentException("First name cannot exceed 100 characters.", nameof(firstName));
+            throw new ArgumentException("Ad 100 karakteri geçemez.", nameof(firstName));
         }
     }
 
@@ -88,12 +88,12 @@ public sealed class User : BaseEntity
     {
         if (string.IsNullOrWhiteSpace(lastName))
         {
-            throw new ArgumentException("Last name cannot be null or empty.", nameof(lastName));
+            throw new ArgumentException("Soyad alanı boş olamaz.", nameof(lastName));
         }
 
         if (lastName.Length > 100)
         {
-            throw new ArgumentException("Last name cannot exceed 100 characters.", nameof(lastName));
+            throw new ArgumentException("Soyad 100 karakteri geçemez.", nameof(lastName));
         }
     }
 
@@ -101,17 +101,17 @@ public sealed class User : BaseEntity
     {
         if (string.IsNullOrWhiteSpace(email))
         {
-            throw new ArgumentException("Email cannot be null or empty.", nameof(email));
+            throw new ArgumentException("E-posta alanı boş olamaz.", nameof(email));
         }
 
         if (!email.Contains('@'))
         {
-            throw new ArgumentException("Email must be a valid email address.", nameof(email));
+            throw new ArgumentException("Geçerli bir e-posta adresi giriniz.", nameof(email));
         }
 
         if (email.Length > 255)
         {
-            throw new ArgumentException("Email cannot exceed 255 characters.", nameof(email));
+            throw new ArgumentException("E-posta 255 karakteri geçemez.", nameof(email));
         }
     }
 }

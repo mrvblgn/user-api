@@ -20,7 +20,7 @@ public sealed class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand
 
         if (user == null)
         {
-            throw new KeyNotFoundException($"User with ID {request.Id} not found.");
+            throw new KeyNotFoundException($"ID'si {request.Id} olan kullanıcı bulunamadı.");
         }
 
         user.Update(

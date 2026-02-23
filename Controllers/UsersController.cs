@@ -29,7 +29,7 @@ public class UsersController : ControllerBase
     {
         var query = new GetAllUsersQuery();
         var result = await _mediator.Send(query, cancellationToken);
-        var response = ApiResponse<List<UserDto>>.SuccessResponse(result, "Users retrieved successfully.");
+        var response = ApiResponse<List<UserDto>>.SuccessResponse(result, "Kullanıcılar başarıyla getirildi.");
         return Ok(response);
     }
 
@@ -43,7 +43,7 @@ public class UsersController : ControllerBase
     {
         var query = new GetUserByIdQuery(id);
         var result = await _mediator.Send(query, cancellationToken);
-        var response = ApiResponse<UserDto>.SuccessResponse(result, "User retrieved successfully.");
+        var response = ApiResponse<UserDto>.SuccessResponse(result, "Kullanıcı başarıyla getirildi.");
         return Ok(response);
     }
 
@@ -56,7 +56,7 @@ public class UsersController : ControllerBase
     public async Task<IActionResult> Create([FromBody] CreateUserCommand command, CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(command, cancellationToken);
-        var response = ApiResponse<CreateUserResponse>.SuccessResponse(result, "User created successfully.");
+        var response = ApiResponse<CreateUserResponse>.SuccessResponse(result, "Kullanıcı başarıyla oluşturuldu.");
         return CreatedAtAction(nameof(GetById), new { id = result.Id }, response);
     }
 
@@ -71,11 +71,11 @@ public class UsersController : ControllerBase
     {
         if (id != command.Id)
         {
-            throw new ArgumentException("ID in URL does not match ID in request body.");
+            throw new ArgumentException("URL'deki ID, istek gövdesindeki ID ile eşleşmiyor.");
         }
 
         var result = await _mediator.Send(command, cancellationToken);
-        var response = ApiResponse<UpdateUserResponse>.SuccessResponse(result, "User updated successfully.");
+        var response = ApiResponse<UpdateUserResponse>.SuccessResponse(result, "Kullanıcı başarıyla güncellendi.");
         return Ok(response);
     }
 

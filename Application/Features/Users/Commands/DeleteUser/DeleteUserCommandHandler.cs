@@ -20,7 +20,7 @@ public sealed class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand
 
         if (user == null)
         {
-            throw new KeyNotFoundException($"User with ID {request.Id} not found.");
+            throw new KeyNotFoundException($"ID'si {request.Id} olan kullanıcı bulunamadı.");
         }
 
         _context.Users.Remove(user);
@@ -28,7 +28,7 @@ public sealed class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand
 
         return new DeleteUserResponse(
             request.Id,
-            $"User '{user.FirstName} {user.LastName}' deleted successfully."
+            $"'{user.FirstName} {user.LastName}' kullanıcısı başarıyla silindi."
         );
     }
 }
